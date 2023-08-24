@@ -1,11 +1,9 @@
-package risk
+package job
 
 import "context"
 
-type H map[string]any
-
 type API interface {
-	GetParams(ctx context.Context, pid int) (H, error)
+	GetJobParams(ctx context.Context, pid int) (H, error)
 	Next(ctx context.Context, pid int, resp H, err error) error
 }
 
@@ -29,9 +27,9 @@ func NewClient(opt ...ClientOption) *Client {
 	}
 }
 
-// GetParams 获取该任务当前参数
-func (cli *Client) GetParams(ctx context.Context, pid int) (H, error) {
-	return cli.apis.GetParams(ctx, pid)
+// GetJobParams 获取该任务当前参数
+func (cli *Client) GetJobParams(ctx context.Context, pid int) (H, error) {
+	return cli.apis.GetJobParams(ctx, pid)
 }
 
 // Next 下一步处理

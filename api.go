@@ -1,4 +1,4 @@
-package risk
+package job
 
 import (
 	"context"
@@ -13,9 +13,7 @@ const (
 )
 
 type api struct {
-	http      *resty.Client
-	appId     string
-	appSecret string
+	http *resty.Client
 }
 
 func NewApi(opts clientOptions) *api {
@@ -28,14 +26,12 @@ func NewApi(opts clientOptions) *api {
 	client.SetHeader("Content-Type", "application/json")
 
 	return &api{
-		http:      client,
-		appId:     opts.appId,
-		appSecret: opts.appSecret,
+		http: client,
 	}
 }
 
-// GetParams 获取任务上一步参数
-func (a *api) GetParams(ctx context.Context, pid int) (H, error) {
+// GetJobParams 获取任务上一步参数
+func (a *api) GetJobParams(ctx context.Context, pid int) (H, error) {
 	var req struct {
 		PID int `json:"pid"`
 	}
@@ -55,7 +51,7 @@ func (a *api) GetParams(ctx context.Context, pid int) (H, error) {
 	}
 
 	if res.StatusCode() != 200 {
-		return nil, fmt.Errorf("write log has error, status_code: %d, response: %s", res.StatusCode(), res.Body())
+		return nil, fmt.Errorf("get job params has error, status_code: %d, response: %s", res.StatusCode(), res.Body())
 	}
 
 	return result, nil
@@ -84,7 +80,7 @@ func (a *api) Next(ctx context.Context, pid int, resp H, err error) error {
 	}
 
 	if res.StatusCode() != 200 {
-		return fmt.Errorf("write log has error, status_code: %d, response: %s", res.StatusCode(), res.Body())
+		return fmt.Errorf("next has error, status_code: %d, response: %s", res.StatusCode(), res.Body())
 	}
 
 	return nil

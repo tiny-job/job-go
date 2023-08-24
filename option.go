@@ -1,4 +1,4 @@
-package risk
+package job
 
 import "time"
 
@@ -10,25 +10,9 @@ var defaultClientOptions = clientOptions{
 }
 
 type clientOptions struct {
-	appId     string
-	appSecret string
-	host      string
-	timeOut   time.Duration
-	debug     bool
-}
-
-// WithAppID 设置APPID
-func WithAppID(appId string) ClientOption {
-	return func(c *clientOptions) {
-		c.appId = appId
-	}
-}
-
-// WithAppSecret 设置AppSecret
-func WithAppSecret(secret string) ClientOption {
-	return func(c *clientOptions) {
-		c.appSecret = secret
-	}
+	host    string
+	timeOut time.Duration
+	debug   bool
 }
 
 // WithServerHost 设置服务器域名，例如http://risk-monitor-api.drugeyes.vip:7031/
